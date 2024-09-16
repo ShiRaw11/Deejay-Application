@@ -8,18 +8,16 @@ function Music(){
         <div className="flex flex-col bg-white ">
 
           <NavBar/>
-          
-     
-
+        
       <div>
-        <div className="mt-4 flex">
+        <div className="flex">
         <Search/>
         </div>
 
 <div className="w-[100vw]">
 
 
-        <div className=" flex flex-wrap  w-[98%]  justify-around mt-4">
+        <div className=" flex flex-wrap  w-[98%]  justify-around">
           <MusicCard/>
           <MusicCard/>
           <MusicCard/>

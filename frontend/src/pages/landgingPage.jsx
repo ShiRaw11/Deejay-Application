@@ -5,7 +5,7 @@ import { NavBar } from "../components/common/navBar";
 
 import { FaChevronDown} from "react-icons/fa";
 import DeejayButton from "../components/common/button";
-
+import React, { useState, useEffect  } from 'react';
 import yt from "..//images/yt.png";
 import twt from "..//images/twt.png";
 import ig from "..//images/ig.jpeg";
@@ -13,36 +13,56 @@ import fb from "..//images/fb.png";
 
 import MusicCard from "../components/common/musicCard";
 import VideoCard from "../components/common/videoCard";
-import EventCard from "../components/common/event";
 import DeejayInput from "../components/common/input";
-
+import FloatingButton from "../components/common/floatingButton";
+import Bubble from "../components/cuteBubbles";
+import SpeakerIcon from "../components/common/speakerAnimation";
+import eventsData from '../events.json';
+const generateBubbles = (count) => {
+  const colors = ['#FF0000', '#FFFFFF', '#0000FF']; // Red, White, Blue
+  return Array.from({ length: count }).map((_, index) => {
+    const size = `${Math.random() * 50 + 20}px`; // Random size between 20px and 70px
+    const left = `${Math.random() * 100}%`; // Random horizontal position
+    const animationDelay = `${Math.random() * 10}s`; // Random animation delay
+    const color = colors[Math.floor(Math.random() * colors.length)]; // Random color
+    return <Bubble key={index} size={size} left={left} animationDelay={animationDelay} color={color} />;
+  });
+};
 
 export const Welcome = () => {
   return (
-    <div className="h-20px w-[90%] border mx-auto mt-10">
+    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-black to-blue-grey">
+      <div className="flex">
       <img
-        alt="face.js
-        "
-        className="h-full w-full  "
+        alt="image of DJ Jojez"
+        src="https://cdn.pixabay.com/photo/2024/02/09/05/22/ai-generated-8562316_640.png"
+        className="h-[30%] w-[40%] rounded-[40%]"
       ></img>
+       <h className='text-white h-full font-bold mt-[20%] ml-[30px]'>"Music can change the world because it can change people." - Bono</h>
+      </div>
+     
+     
     </div>
   );
 };
 
 export const Music = () => {
   return (
-    <div className="w-[90%] h-[100vh] mx-auto ">
-      <div className="flex justify-center w-[100%] font-bold text-[50px]">
-        <h className=""> Music</h>
-      </div>
-
-      <div className="flex mt-4 justify-between">
+    <div className="w-[90%]  mx-auto ">
+      <div className="relative z-10 p-2 text-black flex justify-between shadow-lg ">
+<SpeakerIcon animationClass = 'absolute animate-moveLeft'/>
+<h2 className="text-4xl font-bold mb-4 underline decoration-solid decoration-blue font-mono">
+Music
+        </h2>
+        <SpeakerIcon  animationClass = 'absolute animate-moveRight'/>
+</div>
+  <div className="flex justify-between">
         <MusicCard />
         <MusicCard />
         <MusicCard />
       </div>
 <div className="mt-[3%] flex text-[20px] justify-center hover:text-blue mx-auto w-[90%]">
-<a className="mt-[5%] flex text-[20px] justify-center hover:text-blue mx-auto w-[90%]  flex justify-center items-center ">view more<FaChevronDown className="ml-1" /></a>
+<a className="mt-[5%] flex text-[20px] mb-[20px] justify-center hover:text-blue mx-auto w-[90%]font-mono flex justify-center items-center ">view more Music<FaChevronDown className="ml-1" /></a>
 </div>
     </div>
   );
@@ -50,32 +70,70 @@ export const Music = () => {
 
 export const Videos = () => {
   return (
-    <div className="w-[98%] h-[100vh] mx-auto ">
+    <div className="w-[98%] mx-auto ">
      
-        <h className="flex justify-center w-[100%] font-bold text-[50px]"> Videos</h>
+<div className="relative z-10 p-2 text-black flex justify-between shadow-lg ">
+<SpeakerIcon animationClass = 'absolute animate-moveLeft'/>
+<h2 className="text-4xl font-bold mb-4 underline decoration-solid decoration-blue font-mono">
+Video
+        </h2>
+        <SpeakerIcon animationClass = 'absolute animate-moveRight'/>
+</div>
      
       <div className="">
       <VideoCard/>
-      <a className="mt-[5%] flex text-[20px] justify-center hover:text-blue mx-auto w-[90%] flex justify-center items-center ">view more<FaChevronDown className="ml-1" /></a>
+      <a className="mt-[5%] flex text-[20px] justify-center hover:text-blue mx-auto w-[90%] flex justify-center items-center ">View more Videos<FaChevronDown className="ml-1" /></a>
       </div>
      
     </div>
   );
 };
 
-export const Events=()=>{
-  return(
 
-  
-  <div className="w-[100%] h-[100vh] mx-auto mt-[40px] bg-gray ">
-      <h className="flex justify-center w-[100%] font-bold text-[50px]"> Events</h>
-      <div className=" bg-gray h-[500px] w-[100%] rounded-lg gap-2 flex justify-center">
-      <EventCard/>
-        </div>
 
-  </div>
-  )
+export const Events = () => {
+  const [latestEvent, setLatestEvent] = useState(null);
+  const today = new Date();
+
+  useEffect(() => {
+      // Filter and sort the events to find the latest event
+      const upcomingEvents = eventsData.filter(event => new Date(event.date) >= today);
+      const sortedEvents = upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      // Set the latest upcoming event
+      setLatestEvent(sortedEvents[0]);
+  }, []);
+
+  return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+          <h1 className="text-3xl font-bold mb-6">Latest Event</h1>
+          {latestEvent ? (
+              <div className="flex flex-col items-center bg-white shadow rounded-lg overflow-hidden max-w-md">
+                  <img
+                      src={latestEvent.image}
+                      alt={latestEvent.title}
+                      className="w-full  object-cover"
+                      onError={(e) => {
+                          console.error(`Image failed to load: ${latestEvent.image}`);
+                          e.currentTarget.src = '/events/placeholder.png'; // Path to a placeholder image
+                      }}
+                  />
+                  <div className="p-4 text-center">
+                      <h3 className="text-lg font-bold">{latestEvent.title}</h3>
+                      <p className="text-sm text-gray-500">Date: {new Date(latestEvent.date).toLocaleDateString()}</p>
+                  </div>
+              </div>
+          ) : (
+              <p className="text-lg text-gray-600">No upcoming events.</p>
+          )}
+          <a className="mt-[20px] flex text-[20px] justify-center hover:text-blue mx-auto w-[90%] flex justify-center items-center ">View more Events<FaChevronDown className="ml-1" /></a>
+      </div>
+  );
+
 };
+
+
+
 export const MailList=()=>{
   return(
     <div className="flex flex-col items-center justify-center">
@@ -172,7 +230,8 @@ return(
 const LandingPage = () => {
   return (
     <>
-      <div className="bg-backg bg-cover bg-no-repeat h-[100vh] mt-[20px] ">
+      <div className="bg-black bg-cover bg-no-repeat h-[100vh] mt-[20px] ">
+      {generateBubbles(30)}
         <NavBar />
         <Welcome />
       </div>
@@ -187,7 +246,7 @@ const LandingPage = () => {
       <Events/>
       </div>
       <Footer/>
-    
+    <FloatingButton/>
     </>
   );
 };

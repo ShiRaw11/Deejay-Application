@@ -1,6 +1,4 @@
-import { Radio } from "@mui/material"
 import DeejayInput from "../components/common/input" 
-import CustomSelect from "../components/common/select"
 import DeejayButton from "../components/common/button"
 
 function FirstPage(){

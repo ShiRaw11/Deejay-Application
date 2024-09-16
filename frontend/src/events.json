@@ -1,0 +1,17 @@
+[
+    {
+        "image": "/events/events2.png",
+        "title": "Summer Music Festival",
+        "date": "2024-08-20"
+    },
+    {
+        "image": "/events/events3.png",
+        "title": "Tech Conference 2024",
+        "date": "2024-07-15"
+    },
+    {
+        "image": "/events/events.jpeg",
+        "title": "Art Expo",
+        "date": "2024-09-05"
+    }
+]

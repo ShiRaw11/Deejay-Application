@@ -30,7 +30,7 @@ function VideoCard() {
   };
 
   return (
-    <div className="bg-transparent h-[500px] w-[100%] rounded-lg gap-2 relative">
+    <div className="bg-transparent h-[500px] w-[100%] rounded-lg mt-[20px] relative">
       <div className="w-full h-full aspect-video mt-2 border relative inset-0 group-hover:opacity-50">
         <iframe
           className="w-full h-full"
